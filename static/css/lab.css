@@ -65,7 +65,7 @@
   padding: 0.7rem;
 }
 
-/* ── Lab Dashboard ───────────────────────────────────────── */
+/* ── Nav additions ───────────────────────────────────────── */
 .lab-badge {
   font-size: 0.85rem;
   color: var(--accent);
@@ -88,25 +88,141 @@
   color: var(--accent);
 }
 
-.lab-card-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.5rem;
+/* ── Lab Hero ────────────────────────────────────────────── */
+.lab-hero {
+  background: linear-gradient(135deg, #13111f 0%, #0f0f11 60%);
+  border-bottom: 1px solid var(--border);
+  padding: 3rem 1.5rem;
+}
+
+.lab-hero-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.lab-hero-title {
+  font-size: 2.2rem;
   margin-bottom: 0.5rem;
 }
 
-.lab-status {
-  font-size: 0.72rem;
-  font-weight: 600;
-  padding: 0.2rem 0.55rem;
-  border-radius: 4px;
-  white-space: nowrap;
-  flex-shrink: 0;
+.lab-hero-sub {
+  color: var(--text-muted);
+  font-size: 1rem;
+  margin-bottom: 2rem;
 }
 
-.lab-status--exploring  { background: rgba(250,204,21,0.15); color: #fbbf24; }
-.lab-status--building   { background: rgba(124,108,255,0.15); color: #a78bfa; }
-.lab-status--validating { background: rgba(34,211,238,0.15); color: #22d3ee; }
-.lab-status--shipped    { background: rgba(52,211,153,0.15); color: #34d399; }
-.lab-status--paused     { background: rgba(156,163,175,0.15); color: #9ca3af; }
+.lab-stats {
+  display: flex;
+  gap: 2rem;
+}
+
+.lab-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.lab-stat-num {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.lab-stat-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ── Lab Grid ────────────────────────────────────────────── */
+.lab-main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+}
+
+.lab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+/* ── Lab Card ────────────────────────────────────────────── */
+.lab-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: border-color 0.2s, transform 0.15s;
+}
+
+.lab-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.lab-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.lab-card-name {
+  font-size: 1.15rem;
+  color: var(--text);
+  margin-top: -0.25rem;
+}
+
+.lab-card-desc {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  flex: 1;
+}
+
+.lab-card-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.lab-card-link {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent);
+  transition: color 0.2s;
+}
+
+.lab-card-link:hover {
+  color: var(--accent-hover);
+}
+
+/* ── Status badges ───────────────────────────────────────── */
+.lab-status {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.lab-status--exploring  { background: rgba(250,204,21,0.12); color: #fbbf24; border: 1px solid rgba(250,204,21,0.2); }
+.lab-status--building   { background: rgba(124,108,255,0.12); color: #a78bfa; border: 1px solid rgba(124,108,255,0.2); }
+.lab-status--validating { background: rgba(34,211,238,0.12); color: #22d3ee; border: 1px solid rgba(34,211,238,0.2); }
+.lab-status--shipped    { background: rgba(52,211,153,0.12); color: #34d399; border: 1px solid rgba(52,211,153,0.2); }
+.lab-status--paused     { background: rgba(156,163,175,0.12); color: #9ca3af; border: 1px solid rgba(156,163,175,0.2); }
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .lab-stats { gap: 1.5rem; }
+  .lab-hero { padding: 2rem 1rem; }
+}

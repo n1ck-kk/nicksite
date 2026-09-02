@@ -59,14 +59,31 @@ templ LabIdeas(ideas []lab.Idea) {
 				</div>
 			</div>
 		</nav>
-		<main class="section">
-			<div class="section-inner">
-				<h2 class="section-title">Idea Lab</h2>
-				<div class="projects-grid">
-					for _, idea := range ideas {
-						@labIdeaCard(idea)
-					}
+		<div class="lab-hero">
+			<div class="lab-hero-inner">
+				<h1 class="lab-hero-title">Idea Lab</h1>
+				<p class="lab-hero-sub">Private workspace for concepts, mocks, and builds in progress.</p>
+				<div class="lab-stats">
+					<div class="lab-stat">
+						<span class="lab-stat-num">{ itoa(len(ideas)) }</span>
+						<span class="lab-stat-label">Ideas</span>
+					</div>
+					<div class="lab-stat">
+						<span class="lab-stat-num">{ itoa(countByStatus(ideas, lab.StatusBuilding)) }</span>
+						<span class="lab-stat-label">Building</span>
+					</div>
+					<div class="lab-stat">
+						<span class="lab-stat-num">{ itoa(countByStatus(ideas, lab.StatusShipped)) }</span>
+						<span class="lab-stat-label">Shipped</span>
+					</div>
 				</div>
+			</div>
+		</div>
+		<main class="lab-main">
+			<div class="lab-grid">
+				for _, idea := range ideas {
+					@labIdeaCard(idea)
+				}
 			</div>
 		</main>
 	</body>
@@ -74,16 +91,16 @@ templ LabIdeas(ideas []lab.Idea) {
 }
 
 templ labIdeaCard(idea lab.Idea) {
-	<div class="project-card">
-		<div class="lab-card-header">
-			<h3 class="project-name">{ idea.Name }</h3>
+	<div class="lab-card">
+		<div class="lab-card-top">
 			<span class={ "lab-status", "lab-status--" + statusSlug(string(idea.Status)) }>{ string(idea.Status) }</span>
 		</div>
-		<p class="project-desc">{ idea.Description }</p>
+		<h3 class="lab-card-name">{ idea.Name }</h3>
+		<p class="lab-card-desc">{ idea.Description }</p>
 		if len(idea.Links) > 0 {
-			<div class="project-links">
+			<div class="lab-card-links">
 				for _, link := range idea.Links {
-					<a href={ templ.SafeURL(link.URL) } target="_blank" rel="noopener" class="project-link">{ link.Label }</a>
+					<a href={ templ.SafeURL(link.URL) } target="_blank" rel="noopener" class="lab-card-link">{ link.Label } ↗</a>
 				}
 			</div>
 		}
@@ -103,4 +120,26 @@ func statusSlug(s string) string {
 	default:
 		return "paused"
 	}
+}
+
+func itoa(n int) string {
+	if n == 0 {
+		return "0"
+	}
+	result := ""
+	for n > 0 {
+		result = string(rune('0'+n%10)) + result
+		n /= 10
+	}
+	return result
+}
+
+func countByStatus(ideas []lab.Idea, status lab.Status) int {
+	count := 0
+	for _, i := range ideas {
+		if i.Status == status {
+			count++
+		}
+	}
+	return count
 }
