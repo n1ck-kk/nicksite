@@ -1,0 +1,33 @@
+package views
+
+templ Layout(title string) {
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title>{ title }</title>
+		<link rel="stylesheet" href="/static/css/base.css"/>
+		<link rel="stylesheet" href="/static/css/layout.css"/>
+		<script src="https://unpkg.com/htmx.org@1.9.10" defer></script>
+	</head>
+	<body>
+		<nav class="nav">
+			<div class="nav-inner">
+				<a href="/" class="nav-logo">nick leuer</a>
+				<div class="nav-links">
+					<a href="#about">About</a>
+					<a href="#projects">Projects</a>
+					<a href="#contact">Contact</a>
+				</div>
+			</div>
+		</nav>
+		<main>
+			{ children... }
+		</main>
+		<footer class="footer">
+			<p>© 2026 Nick Leuer</p>
+		</footer>
+	</body>
+	</html>
+}
