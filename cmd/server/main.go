@@ -15,6 +15,7 @@ import (
 
 	"github.com/n1ck-kk/nicksite/internal/config"
 	"github.com/n1ck-kk/nicksite/internal/handlers"
+	"github.com/n1ck-kk/nicksite/internal/lab"
 )
 
 func main() {
@@ -23,7 +24,9 @@ func main() {
 		log.Fatalf("Failed to load config: %v", err)
 	}
 
-	h := handlers.New()
+	lab.InitStore(cfg.SessionSecret, cfg.IsProduction())
+
+	h := handlers.New(cfg.LabPassword)
 
 	r := chi.NewRouter()
 	r.Use(middleware.Recoverer)
@@ -40,6 +43,15 @@ func main() {
 
 	r.Get("/health", h.HandleHealth)
 	r.Get("/", h.HandleHome)
+
+	// Lab routes
+	r.Get("/lab", h.HandleLabLogin)
+	r.Post("/lab", h.HandleLabLoginPost)
+	r.Group(func(r chi.Router) {
+		r.Use(requireLabAuth)
+		r.Get("/lab/ideas", h.HandleLabIdeas)
+		r.Post("/lab/logout", h.HandleLabLogout)
+	})
 
 	srv := &http.Server{
 		Addr:         ":" + cfg.Port,
@@ -72,4 +84,14 @@ func main() {
 	}
 
 	fmt.Println("Server stopped")
+}
+
+func requireLabAuth(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if !lab.IsAuthenticated(r) {
+			http.Redirect(w, r, "/lab", http.StatusFound)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
 }

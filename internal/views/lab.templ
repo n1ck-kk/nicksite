@@ -1,0 +1,106 @@
+package views
+
+import "github.com/n1ck-kk/nicksite/internal/lab"
+
+templ LabLogin(errMsg string) {
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title>Lab — Nick Leuer</title>
+		<link rel="stylesheet" href="/static/css/base.css"/>
+		<link rel="stylesheet" href="/static/css/lab.css"/>
+	</head>
+	<body>
+		<div class="lab-login-wrap">
+			<div class="lab-login-card">
+				<p class="lab-login-icon">🔬</p>
+				<h1 class="lab-login-title">Idea Lab</h1>
+				<p class="lab-login-sub">Private access only.</p>
+				<form method="POST" action="/lab" class="lab-login-form">
+					<input
+						type="password"
+						name="password"
+						placeholder="Password"
+						class="lab-input"
+						autofocus
+					/>
+					if errMsg != "" {
+						<p class="lab-error">{ errMsg }</p>
+					}
+					<button type="submit" class="btn btn-primary lab-submit">Enter</button>
+				</form>
+			</div>
+		</div>
+	</body>
+	</html>
+}
+
+templ LabIdeas(ideas []lab.Idea) {
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<title>Lab — Nick Leuer</title>
+		<link rel="stylesheet" href="/static/css/base.css"/>
+		<link rel="stylesheet" href="/static/css/lab.css"/>
+	</head>
+	<body>
+		<nav class="nav">
+			<div class="nav-inner">
+				<a href="/" class="nav-logo">nick leuer</a>
+				<div class="nav-links">
+					<span class="lab-badge">🔬 Lab</span>
+					<form method="POST" action="/lab/logout" style="margin:0">
+						<button type="submit" class="lab-logout">Leave</button>
+					</form>
+				</div>
+			</div>
+		</nav>
+		<main class="section">
+			<div class="section-inner">
+				<h2 class="section-title">Idea Lab</h2>
+				<div class="projects-grid">
+					for _, idea := range ideas {
+						@labIdeaCard(idea)
+					}
+				</div>
+			</div>
+		</main>
+	</body>
+	</html>
+}
+
+templ labIdeaCard(idea lab.Idea) {
+	<div class="project-card">
+		<div class="lab-card-header">
+			<h3 class="project-name">{ idea.Name }</h3>
+			<span class={ "lab-status", "lab-status--" + statusSlug(string(idea.Status)) }>{ string(idea.Status) }</span>
+		</div>
+		<p class="project-desc">{ idea.Description }</p>
+		if len(idea.Links) > 0 {
+			<div class="project-links">
+				for _, link := range idea.Links {
+					<a href={ templ.SafeURL(link.URL) } target="_blank" rel="noopener" class="project-link">{ link.Label }</a>
+				}
+			</div>
+		}
+	</div>
+}
+
+func statusSlug(s string) string {
+	switch s {
+	case "Exploring":
+		return "exploring"
+	case "Building":
+		return "building"
+	case "Validating":
+		return "validating"
+	case "Shipped":
+		return "shipped"
+	default:
+		return "paused"
+	}
+}

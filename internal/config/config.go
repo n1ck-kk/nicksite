@@ -3,26 +3,30 @@ package config
 import (
 	"fmt"
 	"net"
+	"os"
 	"strconv"
 	"strings"
 
 	"github.com/joho/godotenv"
-	"os"
 )
 
 type Config struct {
-	Port         string
-	Environment  string
-	AllowedHosts string
+	Port          string
+	Environment   string
+	AllowedHosts  string
+	LabPassword   string
+	SessionSecret string
 }
 
 func Load() (*Config, error) {
 	_ = godotenv.Load()
 
 	cfg := &Config{
-		Port:         getEnv("PORT", "8080"),
-		Environment:  getEnv("ENV", "development"),
-		AllowedHosts: getEnv("ALLOWED_HOSTS", ""),
+		Port:          getEnv("PORT", "8080"),
+		Environment:   getEnv("ENV", "development"),
+		AllowedHosts:  getEnv("ALLOWED_HOSTS", ""),
+		LabPassword:   getEnv("LAB_PASSWORD", "changeme"),
+		SessionSecret: getEnv("SESSION_SECRET", "dev-secret-32-chars-minimum-here"),
 	}
 
 	return cfg, cfg.Validate()
@@ -48,6 +52,14 @@ func (c *Config) Validate() error {
 
 	if c.IsProduction() && c.AllowedHosts == "" {
 		errs = append(errs, "ALLOWED_HOSTS is required in production")
+	}
+
+	if c.IsProduction() && c.LabPassword == "changeme" {
+		errs = append(errs, "LAB_PASSWORD must be set in production")
+	}
+
+	if len(c.SessionSecret) < 32 {
+		errs = append(errs, "SESSION_SECRET must be at least 32 characters")
 	}
 
 	if c.AllowedHosts != "" {

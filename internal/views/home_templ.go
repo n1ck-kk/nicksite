@@ -63,7 +63,7 @@ func Home() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div></div></section><!-- Contact --><section class=\"section\" id=\"contact\"><div class=\"section-inner section-center\"><h2 class=\"section-title\">Contact</h2><p class=\"contact-desc\">I'm open to interesting projects and full-time opportunities.</p><div class=\"contact-links\"><a href=\"mailto:nickleuer24@gmail.com\" class=\"contact-link\"><span>Email</span></a> <a href=\"https://github.com/n1ck-kk\" class=\"contact-link\" target=\"_blank\" rel=\"noopener\"><span>GitHub</span></a> <a href=\"https://linkedin.com/in/nickleuer\" class=\"contact-link\" target=\"_blank\" rel=\"noopener\"><span>LinkedIn</span></a></div></div></section>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</div></div></section><!-- Contact --><section class=\"section\" id=\"contact\"><div class=\"section-inner section-center\"><h2 class=\"section-title\">Contact</h2><p class=\"contact-desc\">I'm open to interesting projects and full-time opportunities.</p><div class=\"contact-links\"><a href=\"mailto:hello@example.com\" class=\"contact-link\"><span>Email</span></a> <a href=\"https://github.com/n1ck-kk\" class=\"contact-link\" target=\"_blank\" rel=\"noopener\"><span>GitHub</span></a> <a href=\"https://linkedin.com/in/nickleuer\" class=\"contact-link\" target=\"_blank\" rel=\"noopener\"><span>LinkedIn</span></a></div></div></section>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

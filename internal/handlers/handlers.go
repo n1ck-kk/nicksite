@@ -6,10 +6,12 @@ import (
 	"github.com/n1ck-kk/nicksite/internal/views"
 )
 
-type Handler struct{}
+type Handler struct {
+	labPassword string
+}
 
-func New() *Handler {
-	return &Handler{}
+func New(labPassword string) *Handler {
+	return &Handler{labPassword: labPassword}
 }
 
 func (h *Handler) HandleHealth(w http.ResponseWriter, r *http.Request) {
