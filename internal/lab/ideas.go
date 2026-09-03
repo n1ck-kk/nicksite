@@ -26,12 +26,9 @@ type Idea struct {
 // Add new entries here and push to deploy.
 var Ideas = []Idea{
 	{
-		Name:        "Example Project",
-		Description: "A placeholder idea. Replace this with your first real concept.",
+		Name:        "Military AR Glasses · Drone HUD",
+		Description: "Tactical glasses with a live drone feed projected on the bottom-right lens. Clear AR overlay — no goggles, no separate screen. Altitude, speed, and heading overlaid on real-world view via a 5.8 GHz downlink.",
 		Status:      StatusExploring,
-		Links: []Link{
-			{Label: "Figma Mock", URL: "#"},
-			{Label: "Tech Spec", URL: "#"},
-		},
+		Links:       []Link{},
 	},
 }
